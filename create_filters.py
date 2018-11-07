@@ -1,9 +1,7 @@
 import json
 import requests
 
-BASEURL = "https://api.stackexchange.com/2.2/"
-
-FILTER_URL_SUFFIX = "filters/create"
+import constants
 
 def main():
     filter = createQuestionFilter()
@@ -12,35 +10,38 @@ def main():
 
 def createFilter(includedFieldsList, excludedFieldsList):
     filterParams = {
-        "base": "default",
-        "include": ";".join(includedFieldsList),
-        "exclude": ";".join(excludedFieldsList),
+        'base': 'default',
+        'include': ';'.join(includedFieldsList),
+        'exclude': ';'.join(excludedFieldsList),
     }
 
-    filterResponse = requests.get(BASEURL + FILTER_URL_SUFFIX, filterParams)
+    filterResponse = requests.get(constants.BASEURL +
+                                  constants.FILTER_URL_SUFFIX,
+                                  filterParams)
+
     filterJson = json.loads(filterResponse.content)
-    filter = filterJson["items"][0]["filter"]
+    filter = filterJson['items'][0]['filter']
     return filter;
 
 
 def createQuestionFilter():
     includedFields = (
-        "question.answers",
-        "question.body_markdown",
-        "question.comments",
+        'question.answers',
+        'question.body_markdown',
+        'question.comments',
     )
 
     excludedFields = (
-        "question.accepted_answer_id",
-        "question.bounty_amount",
-        "question.bounty_closes_date",
-        "question.closed_reason",
-        "question.community_owned_date",
-        "question.link",
-        "question.locked_date",
-        "question.migrated_from",
-        "question.migrated_to",
-        "question.protected_date",
+        'question.accepted_answer_id',
+        'question.bounty_amount',
+        'question.bounty_closes_date',
+        'question.closed_reason',
+        'question.community_owned_date',
+        'question.link',
+        'question.locked_date',
+        'question.migrated_from',
+        'question.migrated_to',
+        'question.protected_date',
     )
 
     return createFilter(includedFields, excludedFields)
@@ -48,17 +49,17 @@ def createQuestionFilter():
 
 def createAnswerFilter():
     includedFields = (
-        "answer.body_markdown",
-        "answer.comments",
-        "answer.tags",
-        "answer.title",
+        'answer.body_markdown',
+        'answer.comments',
+        'answer.tags',
+        'answer.title',
     )
 
     excludedFields = (
-        "answer.community_owned_date",
-        "answer.can_flag",
-        "answer.comment_count",
-        "answer.locked_date",
+        'answer.community_owned_date',
+        'answer.can_flag',
+        'answer.comment_count',
+        'answer.locked_date',
     )
 
     return createFilter(includedFields, excludedFields)
@@ -66,13 +67,13 @@ def createAnswerFilter():
 
 def createCommentFilter():
     includedFields = (
-        "comment.body_markdown",
-        "comment.body",
+        'comment.body_markdown',
+        'comment.body',
     )
 
     excludedFields = (
-        "comment.edited",
-        "comment.reply_to_user",
+        'comment.edited',
+        'comment.reply_to_user',
     )
 
     return createFilter(includedFields, excludedFields)

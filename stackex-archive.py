@@ -1,31 +1,30 @@
 import json
 import requests
+
+import constants
 import create_filters
-
-BASEURL = "https://api.stackexchange.com/2.2/"
-
-QUESTIONS_URL_SUFFIX = "questions"
-ANSWERS_URL_SUFFIX = "answers"
-COMMENTS_URL_SUFFIX = "comments"
 
 def main():
     qFilter = create_filters.createQuestionFilter()
     aFilter = create_filters.createAnswerFilter()
     cFilter = create_filters.createCommentFilter()
-    getComments(cFilter)
-    #getQuestions(qFilter)
+    getQuestions(qFilter)
+    print('\n')
     #getAnswers(aFilter)
+    print('\n')
+    #getComments(cFilter)
 
 
 # TODO this only gets the first page from stackoverflow
 def getQuestions(filter):
     requestParams = {
-        "site": "stackoverflow",
-        "filter": filter,
-        "pagesize": "100",
+        'site': 'stackoverflow',
+        'filter': filter,
+        'pagesize': constants.PAGE_SIZE,
     }
 
-    questionsRequest = requests.get(BASEURL + QUESTIONS_URL_SUFFIX,
+    questionsRequest = requests.get(constants.BASEURL + 
+                                    constants.QUESTIONS_URL_SUFFIX,
                                     params=requestParams)
 
     print(questionsRequest.json())
@@ -33,12 +32,13 @@ def getQuestions(filter):
 # TODO this only gets the first page from stackoverflow
 def getAnswers(filter):
     requestParams = {
-        "site": "stackoverflow",
-        "filter": filter,
-        "pagesize": "100",
+        'site': 'stackoverflow',
+        'filter': filter,
+        'pagesize': constants.PAGE_SIZE,
     }
 
-    answerRequest = requests.get(BASEURL + ANSWERS_URL_SUFFIX,
+    answerRequest = requests.get(constants.BASEURL +
+                                 constants.ANSWERS_URL_SUFFIX,
                                  params=requestParams)
     print(answerRequest.json())
 
@@ -46,13 +46,14 @@ def getAnswers(filter):
 # TODO this only gets the first page from stackoverflow
 def getComments(filter):
     requestParams = {
-        "site": "stackoverflow",
-        "filter": filter,
-        "pagesize": "100",
+        'site': 'stackoverflow',
+        'filter': filter,
+        'pagesize': constants.PAGE_SIZE,
     }
 
-    commentRequest = requests.get(BASEURL + COMMENTS_URL_SUFFIX,
-                                 params=requestParams)
+    commentRequest = requests.get(constants.BASEURL +
+                                  constants.COMMENTS_URL_SUFFIX,
+                                  params=requestParams)
     print(commentRequest.json())
 
 
